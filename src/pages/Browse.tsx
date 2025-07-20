@@ -65,16 +65,25 @@ const mockItems = [
   }
 ];
 
+const cityTypes = {
+  'metro': ['Mumbai', 'Delhi', 'Kolkata'],
+  'tech': ['Bangalore', 'Pune'],
+  'cultural': ['Chennai'],
+  'all': ['Bangalore', 'Mumbai', 'Delhi', 'Chennai', 'Pune', 'Kolkata']
+};
+
 export default function Browse() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCity, setSelectedCity] = useState('all');
   const [selectedType, setSelectedType] = useState('all');
+  const [selectedCityType, setSelectedCityType] = useState('all');
 
   const filteredItems = mockItems.filter(item => {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCity = selectedCity === 'all' || item.city.toLowerCase() === selectedCity.toLowerCase();
     const matchesType = selectedType === 'all' || item.type === selectedType;
-    return matchesSearch && matchesCity && matchesType;
+    const matchesCityType = selectedCityType === 'all' || cityTypes[selectedCityType as keyof typeof cityTypes]?.includes(item.city);
+    return matchesSearch && matchesCity && matchesType && matchesCityType;
   });
 
   return (
@@ -96,6 +105,18 @@ export default function Browse() {
             </div>
             
             <div className="flex gap-3">
+              <Select value={selectedCityType} onValueChange={setSelectedCityType}>
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="City Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Types</SelectItem>
+                  <SelectItem value="metro">Metro Cities</SelectItem>
+                  <SelectItem value="tech">Tech Hubs</SelectItem>
+                  <SelectItem value="cultural">Cultural Cities</SelectItem>
+                </SelectContent>
+              </Select>
+              
               <Select value={selectedCity} onValueChange={setSelectedCity}>
                 <SelectTrigger className="w-40">
                   <SelectValue placeholder="City" />
@@ -158,6 +179,7 @@ export default function Browse() {
               setSearchTerm('');
               setSelectedCity('all');
               setSelectedType('all');
+              setSelectedCityType('all');
             }}>
               Clear Filters
             </Button>
