@@ -471,14 +471,8 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="relative py-16 bg-navy text-white overflow-hidden">
-        <motion.div
-          className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-r from-primary via-secondary to-accent"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
-          style={{ originX: 0 }}
-        />
+      <footer className="relative py-16 bg-gradient-to-br from-navy via-navy/95 to-primary/20 text-white">
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-secondary/5" />
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-4 gap-12">
